@@ -1,5 +1,8 @@
 FROM ubuntu:latest
 
+ENV TZ=America/Sao_Paulo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y \
     git \
     nginx \
@@ -12,18 +15,20 @@ RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get ins
     php8.1-mbstring \
     php8.1-zip \
     php8.1-fileinfo \
-    php8.1-json \
     php8.1-mysqli \
-    php8.1-session \
-    php8.1-zlib \
     php8.1-simplexml \
-    php8.1-int1 \
     php8.1-cli \
-    php8.1-domxml \
     php8.1-ldap \
     php8.1-xmlrpc \
-    php8.1-openssl \
-    php8.1-APCu
+    php8.1-APCu \
+    wget \
+    php8.1-intl
 
+COPY glpi-install.sh /home/ 
+COPY nginx/default /etc/nginx/sites-available/default
 
-    
+RUN chmod +x /home/glpi-install.sh
+
+ENTRYPOINT [ "bash", "/home/glpi-install.sh" ]
+
+EXPOSE 80 443

@@ -1,0 +1,23 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name localhost;
+
+    root /var/www/glpi;
+    index index.php;
+
+    access_log /var/log/nginx/glpi.access.log;
+    error_log  /var/log/nginx/glpi.error.log;
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+        include snippets/fastcgi-php.conf;
+        fastcgi_param server_name localhost;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

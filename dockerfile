@@ -3,9 +3,7 @@ FROM ubuntu:latest
 ENV TZ=America/Sao_Paulo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y \
-    git \
-    nginx \
+RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get install -y\
     php8.1 \
     php8.1-fpm \
     php8.1-mysql \
@@ -21,8 +19,12 @@ RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get ins
     php8.1-ldap \
     php8.1-xmlrpc \
     php8.1-APCu \
+    php8.1-intl \
+    php8.1-bz2 \
     wget \
-    php8.1-intl
+    git \
+    nginx \
+    cron
 
 COPY glpi-install.sh /home/ 
 COPY nginx/default /etc/nginx/sites-available/default

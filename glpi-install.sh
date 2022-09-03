@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 # Install GLPI
 echo 'Installing GLPI'
 
-wget https://github.com/glpi-project/glpi/releases/download/10.0.2/glpi-10.0.2.tgz /
+wget https://github.com/glpi-project/glpi/releases/download/10.0.2/glpi-10.0.2.tgz
 
 tar -xzf glpi-10.0.2.tgz
 

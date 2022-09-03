@@ -10,7 +10,7 @@ tar -xzf glpi-10.0.2.tgz
 mv glpi /var/www/glpi
 
 # AJUSTAR PERMISSÕES DE ARQUIVOS
-chown www-data. /var/www/html/glpi -Rf
+chown www-data. /var/www/glpi -Rf
 find /var/www/glpi -type d -exec chmod 755 {} \;
 find /var/www/glpi -type f -exec chmod 644 {} \;
 

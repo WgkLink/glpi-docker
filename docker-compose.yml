@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   web:
@@ -14,9 +14,14 @@ services:
     ports:
       - "3306"
     restart: always
+
+    volumes:
+      - ./mysql/create.sql :/docker-entrypoint-initdb.d/create.sql
     environment:
       MYSQL_ROOT_PASSWORD: glpi
       MYSQL_DATABASE: glpi
       MYSQL_USER: glpi
       MYSQL_PASSWORD: glpi
+
+
 

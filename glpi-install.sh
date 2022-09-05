@@ -8,7 +8,7 @@ echo 'Extracting GLPI'
 tar -xzf glpi-10.0.2.tgz
 
 echo 'Moving GLPI to /var/www/html'
-mv glpi /var/www/glpi
+mv glpi /var/www/
 
 # AJUSTAR PERMISSÕES DE ARQUIVOS
 echo 'Ajusting permissions'

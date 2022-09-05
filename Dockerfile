@@ -26,10 +26,10 @@ RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get ins
     nginx \
     cron
 
-COPY glpi-install.sh /home/ 
+COPY glpi-install.sh / 
 COPY nginx/default /etc/nginx/sites-available/default
 
-RUN chmod +x /home/glpi-install.sh
+RUN chmod +x /glpi-install.sh
 
 ENTRYPOINT [ "bash", "/home/glpi-install.sh" ]
 

@@ -1,27 +1,12 @@
 version: "3.8"
 
 services:
-  web:
-    image: glpi-docker:1.2
-    container_name: glpi-web-server
-    ports:
-      - "80:80"
-    depends_on:
-      - db
-    restart: always
-    environment:
-      - GLPI_DB_HOST=db
-      - GLPI_DB_NAME=glpi
-      - GLPI_DB_USER=glpi
-      - GLPI_DB_PASSWORD=glpi
-    volumes:
-      - ./www:/var/www/
   db:
     image: mysql:latest
     container_name: glpi-mysql
     ports:
       - "3306"
-    restart: always
+    restart: on-failure
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
     environment:
@@ -30,8 +15,22 @@ services:
       MYSQL_USER: glpi
       MYSQL_PASSWORD: glpi
       TZ: America/Sao_Paulo
-
-    command: ['mysqld','--default-time-zone=-03:00']
+  
+  web:
+      image: glpi-docker:1.2
+      container_name: glpi-web-server
+      ports:
+        - "80:80"
+      depends_on:
+        - db
+      restart: on-failure
+      environment:
+        - GLPI_DB_HOST=db
+        - GLPI_DB_NAME=glpi
+        - GLPI_DB_USER=glpi
+        - GLPI_DB_PASSWORD=glpi
+      volumes:
+        - ./www:/var/www/
 
 volumes:
     mysql:

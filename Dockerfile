@@ -28,9 +28,11 @@ RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get ins
 
 COPY glpi-install.sh / 
 COPY nginx/default /etc/nginx/sites-available/default
+COPY nginx/certificate.crt /etc/nginx/certs/certificate.crt
+COPY nginx/certificate.key /etc/nginx/certs/certificate.key
 
 RUN chmod +x /glpi-install.sh
 
-ENTRYPOINT [ "bash", "/home/glpi-install.sh" ]
+ENTRYPOINT [ "bash", "/glpi-install.sh" ]
 
 EXPOSE 80 443

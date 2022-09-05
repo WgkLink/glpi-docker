@@ -7,13 +7,16 @@ services:
       - "80:80"
     depends_on:
       - db
+    restart: always
 
   db:
     image: mysql:latest
     ports:
       - "3306"
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: glpi
       MYSQL_DATABASE: glpi
       MYSQL_USER: glpi
       MYSQL_PASSWORD: glpi
+

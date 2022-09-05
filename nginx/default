@@ -20,4 +20,9 @@ server {
     location / {
         try_files $uri $uri/ =404;
     }
+
+    location /files/ {
+        allow 127.0.0.1;
+        deny all;
+    }
 }

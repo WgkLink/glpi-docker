@@ -1,6 +1,18 @@
 server {
-    listen 443;
-    listen [::]:443;
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+
+    ssl_certificate /etc/nginx/certificates/glpi.crt;
+    ssl_certificate_key /etc/nginx/certificates/glpi.key;
+
+    server_name 172.16.42.172;
+    
+    return 308 https://localhost$request_uri;
+} 
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
 
     server_name 172.16.42.172;
 
@@ -9,6 +21,9 @@ server {
 
     root /var/www/glpi;
     index index.php;
+
+    server_name 172.16.42.172;
+    server_name_in_redirect on;
 
     access_log /var/log/nginx/glpi.access.log;
     error_log  /var/log/nginx/glpi.error.log;
@@ -26,6 +41,7 @@ server {
 
     location /files {
         allow 127.0.0.1;
+        allow localhost;
         deny all;
     }
 }

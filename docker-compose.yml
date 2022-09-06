@@ -21,6 +21,7 @@ services:
       container_name: glpi-web-server
       ports:
         - "80:80"
+        - "443:443"
       depends_on:
         - db
       restart: on-failure

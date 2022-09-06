@@ -26,13 +26,13 @@ RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get ins
     nginx \
     cron
 
-COPY glpi-install.sh / 
+COPY entrypoint-docker.sh / 
 COPY nginx/default /etc/nginx/sites-available/default
 COPY nginx/certificate.crt /etc/nginx/certs/certificate.crt
 COPY nginx/certificate.key /etc/nginx/certs/certificate.key
 
-RUN chmod +x /glpi-install.sh
+RUN chmod +x /entrypoint-docker.sh
 
-ENTRYPOINT [ "bash", "/glpi-install.sh" ]
+ENTRYPOINT [ "bash", "/entrypoint-docker.sh" ]
 
 EXPOSE 80 443

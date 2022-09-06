@@ -36,6 +36,11 @@ echo 'Configuring database'
 php /var/www/glpi/bin/console db:configure -n -r -H $GLPI_DB_HOST -d $GLPI_DB_NAME -u $GLPI_DB_USER -p $GLPI_DB_PASSWORD
 php /var/www/glpi/bin/console db:update --no-interaction --skip-db-checks --enable-telemetry
 php /var/www/glpi/bin/console glpi:migration:utf8mb4 --no-interaction
+php /var/www/glpi/bin/console glpi:migration:unsigned_keys --no-interaction
+
+# Removendo pasta install
+echo 'Remove install.php'
+rm -rf /var/www/glpi/install/install.php
 
 # Reajustando o acesso ao usuário do www-data
 echo 'Reajusting www user access'

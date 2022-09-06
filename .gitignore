@@ -2,4 +2,4 @@ mysql/glpidb.sql
 initdb/glpidb.sql
 www/*
 nginx/certificate.crt 
-nginx/certificate.keys
+nginx/certificate.key

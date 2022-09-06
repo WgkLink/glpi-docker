@@ -2,19 +2,19 @@ server {
     listen 443 ssl default_server;
     listen [::]:443 ssl default_server;
 
-    ssl_certificate /etc/nginx/certs/certificate.crt;
-    ssl_certificate_key /etc/nginx/certs/certificate.key;
+    ssl_certificate /etc/nginx/certificates/glpi.crt;
+    ssl_certificate_key /etc/nginx/certificates/glpi.key;
 
-    server_name 172.16.42.172;
+    server_name 172.16.42.239;
     
-    return 308 https://172.16.42.172$request_uri;
+    return 308 https://glpi.battistella.local$request_uri;
 }
 
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
-    server_name 172.16.42.172;
+    server_name 172.16.42.239;
 
     ssl_certificate /etc/nginx/certs/certificate.crt;
     ssl_certificate_key /etc/nginx/certs/certificate.key;
@@ -22,7 +22,7 @@ server {
     root /var/www/glpi;
     index index.php;
 
-    server_name 172.16.42.172;
+    server_name 172.16.42.239;
     server_name_in_redirect on;
 
     access_log /var/log/nginx/glpi.access.log;
@@ -32,7 +32,7 @@ server {
         include fastcgi_params;
         fastcgi_pass unix:/run/php/php8.1-fpm.sock;
         include snippets/fastcgi-php.conf;
-        fastcgi_param server_name 172.16.42.172;
+        fastcgi_param server_name 172.16.42.239;
     }
 
     location / {

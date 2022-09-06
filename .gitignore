@@ -1,5 +1,5 @@
 mysql/glpidb.sql
 initdb/glpidb.sql
 www/*
-ngix/certificate.crt 
-ngix/certificate.key
+nginx/certificate.crt 
+nginx/certificate.keys

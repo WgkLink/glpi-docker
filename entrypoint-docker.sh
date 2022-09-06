@@ -8,7 +8,7 @@ if [ -d "$FILE" ]; then
     /etc/init.d/php8.1-fpm start
 
     echo 'Starting nginx'
-    nginx -g 'daemon off';
+    nginx -g 'daemon off;'
     
 else
     # Install GLPI

@@ -6,7 +6,7 @@ services:
     container_name: glpi-mysql
     ports:
       - "3306"
-    restart: on-failure
+    restart: always
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
     environment:
@@ -24,7 +24,7 @@ services:
         - "443:443"
       depends_on:
         - db
-      restart: on-failure
+      restart: always
       environment:
         - GLPI_DB_HOST=db
         - GLPI_DB_NAME=glpi

@@ -9,6 +9,7 @@ services:
     restart: always
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
+      - /backup:/backup
     environment:
       MYSQL_ROOT_PASSWORD: glpi
       MYSQL_DATABASE: glpi
@@ -31,7 +32,8 @@ services:
         - GLPI_DB_USER=glpi
         - GLPI_DB_PASSWORD=glpi
       volumes:
-        - ./www:/var/www/
+        - /var/www/:/var/www/
+        - /backup:/backup
 
 volumes:
     mysql:

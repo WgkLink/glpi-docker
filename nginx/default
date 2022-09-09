@@ -1,16 +1,4 @@
 server {
-    listen 443 ssl default_server;
-    listen [::]:443 ssl default_server;
-
-    ssl_certificate /etc/nginx/certificates/glpi.crt;
-    ssl_certificate_key /etc/nginx/certificates/glpi.key;
-
-    server_name 172.16.42.239;
-    
-    return 308 https://glpi.battistella.local$request_uri;
-}
-
-server {
     listen 443 ssl;
     listen [::]:443 ssl;
 

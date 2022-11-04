@@ -34,7 +34,3 @@ services:
       volumes:
         - /var/www/:/var/www/
 
-volumes:
-    mysql:
-    glpi:
-

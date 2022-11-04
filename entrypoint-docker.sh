@@ -1,42 +1,18 @@
 #!/bin/bash
 
 FILE=/var/www/glpi
+
 if [ -d "$FILE" ]; then
     echo "$FILE GLPI is installed."
 
-    echo 'Starting php-fpm'
-    /etc/init.d/php8.1-fpm start
-
-    echo 'Starting nginx'
-    nginx -g 'daemon off;'
-    
-else
-    # Install GLPI
-    echo 'Installing GLPI'
-    wget https://github.com/glpi-project/glpi/releases/download/10.0.2/glpi-10.0.2.tgz
-
-    echo 'Extracting GLPI'
-    tar -xzf glpi-10.0.2.tgz
-
-    echo 'Moving GLPI to /var/www/'
-    mv glpi /var/www/
-    cp -r /var/www/config/* /var/www/glpi/config
-    cp -r /var/www/files/* /var/www/glpi/files
-    cp -r /var/www/marketplace/* /var/www/glpi/marketplace
-    cp -r /var/www/plugins/* /var/www/glpi/plugins
-
-    # AJUSTAR PERMISSÕES DE ARQUIVOS
     echo 'Ajusting permissions'
     chown www-data. /var/www/glpi -Rf
     find /var/www/glpi -type d -exec chmod 755 {} \;
     find /var/www/glpi -type f -exec chmod 644 {} \;
 
-    # Criar entrada no agendador de tarefas do Linux
-    echo 'Creating cron entry'
-    echo -e "* *\t* * *\troot\tphp /var/www/glpi/front/cron.php" >> /etc/crontab
-    
     # Reiniciar agendador de tarefas para ler as novas configurações
     echo 'Restarting cron'
+    echo '* * * * * www-data /usr/bin/php /var/www/glpi/front/cron.php 2>&- 1>&-' >> /etc/cron.d/glpi
     service cron restart
 
     echo 'Starting php-fpm'
@@ -45,20 +21,16 @@ else
     # Configuração do banco de dados
     echo 'Configuring database'
     php /var/www/glpi/bin/console db:configure -n -r -H $GLPI_DB_HOST -d $GLPI_DB_NAME -u $GLPI_DB_USER -p $GLPI_DB_PASSWORD
-    #php /var/www/glpi/bin/console db:update --no-interaction --skip-db-checks --enable-telemetry
-    #php /var/www/glpi/bin/console glpi:migration:utf8mb4 --no-interaction
-    #php /var/www/glpi/bin/console glpi:migration:unsigned_keys --no-interaction
 
-    # Removendo pasta install
-    echo 'Remove install.php'
-    rm -rf /var/www/glpi/install/install.php
+    RUN sed '1403s/$/ on/' -i /etc/php/8.1/fpm/php.ini
 
-    # Reajustando o acesso ao usuário do www-data
-    echo 'Reajusting www user access'
-    chown www-data. /var/www/glpi/files -Rf
 
     echo 'Starting nginx'
     nginx -g 'daemon off;'
+    
+else
+    echo "$FILE GLPI is not installed."
 fi
+
 
 

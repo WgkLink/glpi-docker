@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3"
 
 services:
   db:
@@ -9,7 +9,7 @@ services:
     restart: always
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
-      - /backup:/backup
+      - /var/lib/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: glpi
       MYSQL_DATABASE: glpi
@@ -18,7 +18,7 @@ services:
       TZ: America/Sao_Paulo
   
   web:
-      image: glpi-docker:1.2
+      image: glpi-docker:latest
       container_name: glpi-web-server
       ports:
         - "80:80"
@@ -33,7 +33,6 @@ services:
         - GLPI_DB_PASSWORD=glpi
       volumes:
         - /var/www/:/var/www/
-        - /backup:/backup
 
 volumes:
     mysql:

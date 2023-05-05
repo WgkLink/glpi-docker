@@ -2,7 +2,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name suporte.battistella.local;
+    server_name example.com;
 
     #ssl_certificate /etc/nginx/certs/certificate.crt;
     #ssl_certificate_key /etc/nginx/certs/certificate.key;
@@ -10,7 +10,7 @@ server {
     root /var/www/glpi;
     index index.php;
 
-    server_name suporte.battistella.local;
+    server_name example.com;
     server_name_in_redirect on;
 
     access_log /var/log/nginx/glpi.access.log;
@@ -20,7 +20,7 @@ server {
         include fastcgi_params;
         fastcgi_pass unix:/run/php/php8.1-fpm.sock;
         include snippets/fastcgi-php.conf;
-        fastcgi_param server_name suporte.battistella.local;
+        fastcgi_param server_name example.com;
     }
 
     location / {

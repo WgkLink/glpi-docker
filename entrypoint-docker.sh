@@ -16,14 +16,12 @@ if [ -d "$FILE" ]; then
     service cron restart
 
     echo 'Starting php-fpm'
+    RUN sed '1403s/$/ on/' -i /etc/php/8.1/fpm/php.ini
     /etc/init.d/php8.1-fpm start
 
     # Configuração do banco de dados
     echo 'Configuring database'
     php /var/www/glpi/bin/console db:configure -n -r -H $GLPI_DB_HOST -d $GLPI_DB_NAME -u $GLPI_DB_USER -p $GLPI_DB_PASSWORD
-
-    RUN sed '1403s/$/ on/' -i /etc/php/8.1/fpm/php.ini
-
 
     echo 'Starting nginx'
     nginx -g 'daemon off;'

@@ -16,21 +16,19 @@ services:
       MYSQL_USER: glpi
       MYSQL_PASSWORD: glpi
       TZ: America/Sao_Paulo
-  
   web:
       image: glpi-docker:latest
       container_name: glpi-web-server
       ports:
         - "80:80"
         - "443:443"
+      restart: always
       depends_on:
         - db
-      restart: always
-      environment:
-        - GLPI_DB_HOST=db
-        - GLPI_DB_NAME=glpi
-        - GLPI_DB_USER=glpi
-        - GLPI_DB_PASSWORD=glpi
       volumes:
         - /var/www/:/var/www/
-
+      environment:
+        GLPI_DB_HOST: db
+        GLPI_DB_NAME: glpi
+        GLPI_DB_USER: glpi
+        GLPI_DB_PASSWORD: glpi
